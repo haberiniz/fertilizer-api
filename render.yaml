@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: fertilizer-api
+    runtime: python
+    repo: https://github.com/haberiniz/fertilizer-api.git
+    plan: free
+    envVars:
+      - key: OPENWEATHER_API_KEY
+        sync: false
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
