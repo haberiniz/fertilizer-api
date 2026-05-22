@@ -540,20 +540,29 @@ def calculer_engrais_intelligent(wilaya_name, crop_name, planting_date_str, area
     soil_type_fr = WILAYA_SOIL_MAPPING.get(wilaya_name, "Sols bruns calcaires")
     soil_data_complexe = SOL_NUTRIENTS_COMPLET.get(soil_type_fr, SOL_NUTRIENTS_COMPLET["Sols bruns calcaires"])
 
-    # التحقق من وجود المحصول
+    # ✅ التحقق من وجود المحصول - تصحيح
     culture_data = CROPS_DATABASE.get(crop_name)
     if not culture_data:
-        return {"error": f"Crop data not found for {crop_name}"}
+        return {
+            "success": False,
+            "error": f"Crop data not found for {crop_name}. Available crops: {', '.join(CROPS_DATABASE.keys())}"
+        }
 
     # حساب المرحلة الحالية
     stage_info = calculer_stade(planting_date_str, culture_data)
     if not stage_info:
-        return {"error": "Invalid planting date or future date"}
+        return {
+            "success": False,
+            "error": "Invalid planting date or future date. Please use a date in the past."
+        }
 
     current_stade_name = stage_info["stade"]
     stade_data = culture_data["stades"].get(current_stade_name)
     if not stade_data:
-        return {"error": f"Stage data not found for {current_stade_name}"}
+        return {
+            "success": False,
+            "error": f"Stage data not found for {current_stade_name}"
+        }
 
     # حساب الاحتياجات
     nutriments_list = ["N", "P", "K", "Ca", "Mg", "S"]
@@ -718,7 +727,7 @@ def calculate_fertilizer():
         
         # التحقق من صحة المدخلات
         if not wilaya or not crop or not plant_date:
-            return jsonify({"success": False, "error": "Missing required fields"}), 400
+            return jsonify({"success": False, "error": "Missing required fields: wilaya, crop, plantDate"}), 400
         
         # الحصول على إحداثيات الولاية
         wilaya_coords = WILAYA_COORDINATES.get(wilaya)
@@ -731,10 +740,21 @@ def calculate_fertilizer():
         # حساب التوصية
         result = calculer_engrais_intelligent(wilaya, crop, plant_date, area, weather_data)
         
+        # ✅ إذا كانت النتيجة تحتوي على success: False، نرجعها مع status code مناسب
+        if not result.get('success', True):
+            return jsonify(result), 400
+        
         return jsonify(result)
     
+    except ValueError as e:
+        # خطأ في تحويل البيانات (مثلاً area مش رقم)
+        return jsonify({"success": False, "error": f"Invalid data format: {str(e)}"}), 400
     except Exception as e:
-        return jsonify({"success": False, "error": str(e)}), 500
+        # أي خطأ آخر
+        print(f"❌ Unexpected error: {e}")
+        import traceback
+        traceback.print_exc()
+        return jsonify({"success": False, "error": f"Server error: {str(e)}"}), 500
 
 @app.route('/api/weather', methods=['GET'])
 def get_weather():
