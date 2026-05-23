@@ -160,7 +160,11 @@ SOL_NUTRIENTS_COMPLET = {
 }
 
 # قاعدة بيانات المحاصيل
+# قاعدة بيانات المحاصيل - جميع المحاصيل مدعومة ✅
 CROPS_DATABASE = {
+    # ============================================================
+    # 🌾 الحبوب (Céréales)
+    # ============================================================
     "قمح صلب": {
         "categorie": "Céréale", "cycle_jours": 180,
         "stades": {
@@ -170,11 +174,22 @@ CROPS_DATABASE = {
             "التسنبل": {"duree": 40, "N": 45, "P": 20, "K": 50, "Ca": 8, "Mg": 5, "S": 3},
             "النضج": {"duree": 40, "N": 10, "P": 15, "K": 20, "Ca": 5, "Mg": 3, "S": 2},
         },
-        "temperature_optimale": [12, 25],
-        "temperature_critique": [0, 35],
+        "temperature_optimale": [12, 25], "temperature_critique": [0, 35],
         "irrigation": {"الإنبات": 3, "الخضري": 5, "الاستطالة": 6, "التسنبل": 7, "النضج": 2},
-        "carences_sensibles": ["N", "P"],
-        "excès_sensibles": ["N"],
+        "carences_sensibles": ["N", "P"], "excès_sensibles": ["N"],
+    },
+    "قمح لين": {
+        "categorie": "Céréale", "cycle_jours": 170,
+        "stades": {
+            "الإنبات": {"duree": 14, "N": 24, "P": 38, "K": 28, "Ca": 9, "Mg": 5, "S": 3},
+            "الخضري": {"duree": 52, "N": 68, "P": 34, "K": 53, "Ca": 14, "Mg": 7, "S": 5},
+            "الاستطالة": {"duree": 28, "N": 58, "P": 24, "K": 43, "Ca": 9, "Mg": 6, "S": 4},
+            "التسنبل": {"duree": 38, "N": 43, "P": 19, "K": 48, "Ca": 7, "Mg": 4, "S": 3},
+            "النضج": {"duree": 38, "N": 9, "P": 14, "K": 19, "Ca": 4, "Mg": 3, "S": 2},
+        },
+        "temperature_optimale": [11, 24], "temperature_critique": [-1, 34],
+        "irrigation": {"الإنبات": 2.8, "الخضري": 4.8, "الاستطالة": 5.8, "التسنبل": 6.8, "النضج": 1.8},
+        "carences_sensibles": ["N", "P"], "excès_sensibles": ["N"],
     },
     "شعير": {
         "categorie": "Céréale", "cycle_jours": 150,
@@ -185,12 +200,51 @@ CROPS_DATABASE = {
             "التسنبل": {"duree": 35, "N": 40, "P": 18, "K": 45, "Ca": 7, "Mg": 4, "S": 2},
             "النضج": {"duree": 33, "N": 8, "P": 12, "K": 18, "Ca": 4, "Mg": 2, "S": 1},
         },
-        "temperature_optimale": [10, 28],
-        "temperature_critique": [-2, 38],
+        "temperature_optimale": [10, 28], "temperature_critique": [-2, 38],
         "irrigation": {"الإنبات": 2.5, "الخضري": 4.5, "الاستطالة": 5.5, "التسنبل": 6.5, "النضج": 1.5},
-        "carences_sensibles": ["P", "K"],
-        "excès_sensibles": ["K"],
+        "carences_sensibles": ["P", "K"], "excès_sensibles": ["K"],
     },
+    "ذرة": {
+        "categorie": "Céréale", "cycle_jours": 110,
+        "stades": {
+            "الإنبات": {"duree": 10, "N": 22, "P": 38, "K": 32, "Ca": 10, "Mg": 6, "S": 4},
+            "النمو الخضري": {"duree": 40, "N": 75, "P": 40, "K": 65, "Ca": 18, "Mg": 12, "S": 8},
+            "الازهار": {"duree": 20, "N": 55, "P": 35, "K": 70, "Ca": 20, "Mg": 14, "S": 9},
+            "امتلاء الحبوب": {"duree": 40, "N": 30, "P": 25, "K": 45, "Ca": 12, "Mg": 8, "S": 5},
+        },
+        "temperature_optimale": [20, 35], "temperature_critique": [8, 42],
+        "irrigation": {"الإنبات": 3.5, "النمو الخضري": 6.5, "الازهار": 8, "امتلاء الحبوب": 5},
+        "carences_sensibles": ["N", "K"], "excès_sensibles": ["N"],
+    },
+    "سرغو": {
+        "categorie": "Céréale", "cycle_jours": 100,
+        "stades": {
+            "الإنبات": {"duree": 9, "N": 18, "P": 32, "K": 28, "Ca": 8, "Mg": 5, "S": 3},
+            "النمو الخضري": {"duree": 38, "N": 65, "P": 35, "K": 58, "Ca": 15, "Mg": 10, "S": 7},
+            "الازهار": {"duree": 18, "N": 48, "P": 30, "K": 62, "Ca": 17, "Mg": 12, "S": 8},
+            "النضج": {"duree": 35, "N": 25, "P": 22, "K": 40, "Ca": 10, "Mg": 7, "S": 4},
+        },
+        "temperature_optimale": [22, 38], "temperature_critique": [10, 45],
+        "irrigation": {"الإنبات": 3, "النمو الخضري": 6, "الازهار": 7.5, "النضج": 4.5},
+        "carences_sensibles": ["N", "P"], "excès_sensibles": ["K"],
+    },
+    "شوفان": {
+        "categorie": "Céréale", "cycle_jours": 140,
+        "stades": {
+            "الإنبات": {"duree": 13, "N": 21, "P": 36, "K": 26, "Ca": 9, "Mg": 5, "S": 3},
+            "الخضري": {"duree": 48, "N": 62, "P": 32, "K": 47, "Ca": 13, "Mg": 8, "S": 5},
+            "الاستطالة": {"duree": 26, "N": 52, "P": 22, "K": 42, "Ca": 11, "Mg": 7, "S": 4},
+            "التسنبل": {"duree": 32, "N": 41, "P": 19, "K": 46, "Ca": 8, "Mg": 5, "S": 3},
+            "النضج": {"duree": 21, "N": 9, "P": 13, "K": 19, "Ca": 5, "Mg": 3, "S": 2},
+        },
+        "temperature_optimale": [10, 26], "temperature_critique": [-3, 36],
+        "irrigation": {"الإنبات": 2.6, "الخضري": 4.6, "الاستطالة": 5.6, "التسنبل": 6.6, "النضج": 1.6},
+        "carences_sensibles": ["N", "K"], "excès_sensibles": ["N"],
+    },
+
+    # ============================================================
+    # 🥦 الخضروات (Légumes)
+    # ============================================================
     "طماطم": {
         "categorie": "Légume", "cycle_jours": 120,
         "stades": {
@@ -199,11 +253,9 @@ CROPS_DATABASE = {
             "الازهار": {"duree": 20, "N": 45, "P": 45, "K": 60, "Ca": 25, "Mg": 12, "S": 8},
             "الاثمار": {"duree": 40, "N": 40, "P": 35, "K": 75, "Ca": 30, "Mg": 15, "S": 10},
         },
-        "temperature_optimale": [18, 30],
-        "temperature_critique": [8, 40],
+        "temperature_optimale": [18, 30], "temperature_critique": [8, 40],
         "irrigation": {"الشتلات": 4, "النمو الخضري": 6, "الازهار": 7, "الاثمار": 8},
-        "carences_sensibles": ["Ca", "K"],
-        "excès_sensibles": ["N"],
+        "carences_sensibles": ["Ca", "K"], "excès_sensibles": ["N"],
     },
     "بطاطس": {
         "categorie": "Légume", "cycle_jours": 100,
@@ -213,12 +265,220 @@ CROPS_DATABASE = {
             "تكوين الدرنات": {"duree": 30, "N": 35, "P": 35, "K": 70, "Ca": 20, "Mg": 12, "S": 8},
             "النضج": {"duree": 20, "N": 10, "P": 15, "K": 25, "Ca": 8, "Mg": 5, "S": 3},
         },
-        "temperature_optimale": [15, 25],
-        "temperature_critique": [5, 35],
+        "temperature_optimale": [15, 25], "temperature_critique": [5, 35],
         "irrigation": {"الإنبات": 3.5, "النمو الخضري": 5.5, "تكوين الدرنات": 7, "النضج": 2.5},
-        "carences_sensibles": ["K", "Mg"],
-        "excès_sensibles": ["N"],
+        "carences_sensibles": ["K", "Mg"], "excès_sensibles": ["N"],
     },
+    "بصل": {
+        "categorie": "Légume", "cycle_jours": 130,
+        "stades": {
+            "الإنبات": {"duree": 18, "N": 22, "P": 42, "K": 35, "Ca": 11, "Mg": 6, "S": 4},
+            "النمو الخضري": {"duree": 45, "N": 58, "P": 38, "K": 52, "Ca": 16, "Mg": 9, "S": 6},
+            "تكوين البصلة": {"duree": 35, "N": 42, "P": 35, "K": 65, "Ca": 19, "Mg": 11, "S": 7},
+            "النضج": {"duree": 32, "N": 12, "P": 18, "K": 28, "Ca": 9, "Mg": 5, "S": 3},
+        },
+        "temperature_optimale": [13, 28], "temperature_critique": [2, 38],
+        "irrigation": {"الإنبات": 3.2, "النمو الخضري": 5.2, "تكوين البصلة": 6.5, "النضج": 2},
+        "carences_sensibles": ["P", "K"], "excès_sensibles": ["N"],
+    },
+    "ثوم": {
+        "categorie": "Légume", "cycle_jours": 150,
+        "stades": {
+            "الإنبات": {"duree": 20, "N": 18, "P": 38, "K": 32, "Ca": 10, "Mg": 5, "S": 6},
+            "النمو الخضري": {"duree": 50, "N": 52, "P": 35, "K": 48, "Ca": 14, "Mg": 8, "S": 8},
+            "تكوين الرؤوس": {"duree": 45, "N": 38, "P": 32, "K": 58, "Ca": 17, "Mg": 10, "S": 10},
+            "النضج": {"duree": 35, "N": 10, "P": 15, "K": 25, "Ca": 8, "Mg": 4, "S": 5},
+        },
+        "temperature_optimale": [12, 26], "temperature_critique": [0, 35],
+        "irrigation": {"الإنبات": 3, "النمو الخضري": 5, "تكوين الرؤوس": 6, "النضج": 1.5},
+        "carences_sensibles": ["S", "K"], "excès_sensibles": ["N"],
+    },
+    "فلفل": {
+        "categorie": "Légume", "cycle_jours": 100,
+        "stades": {
+            "الشتلات": {"duree": 25, "N": 28, "P": 42, "K": 38, "Ca": 14, "Mg": 7, "S": 4},
+            "النمو الخضري": {"duree": 30, "N": 58, "P": 38, "K": 52, "Ca": 19, "Mg": 10, "S": 6},
+            "الازهار": {"duree": 18, "N": 48, "P": 42, "K": 58, "Ca": 23, "Mg": 12, "S": 7},
+            "الاثمار": {"duree": 27, "N": 42, "P": 38, "K": 68, "Ca": 26, "Mg": 14, "S": 9},
+        },
+        "temperature_optimale": [20, 33], "temperature_critique": [10, 40],
+        "irrigation": {"الشتلات": 3.5, "النمو الخضري": 5.5, "الازهار": 6.5, "الاثمار": 7.5},
+        "carences_sensibles": ["Ca", "K"], "excès_sensibles": ["N"],
+    },
+    "كوسة": {
+        "categorie": "Légume", "cycle_jours": 90,
+        "stades": {
+            "الإنبات": {"duree": 10, "N": 20, "P": 35, "K": 30, "Ca": 10, "Mg": 5, "S": 3},
+            "النمو الخضري": {"duree": 30, "N": 50, "P": 30, "K": 45, "Ca": 15, "Mg": 8, "S": 5},
+            "الازهار": {"duree": 15, "N": 40, "P": 35, "K": 50, "Ca": 18, "Mg": 10, "S": 6},
+            "الاثمار": {"duree": 35, "N": 35, "P": 30, "K": 60, "Ca": 20, "Mg": 12, "S": 8},
+        },
+        "temperature_optimale": [20, 32], "temperature_critique": [10, 40],
+        "irrigation": {"الإنبات": 3, "النمو الخضري": 5, "الازهار": 6, "الاثمار": 7},
+        "carences_sensibles": ["K", "Ca"], "excès_sensibles": ["N"],
+    },
+    "باذنجان": {
+        "categorie": "Légume", "cycle_jours": 110,
+        "stades": {
+            "الشتلات": {"duree": 25, "N": 25, "P": 40, "K": 35, "Ca": 12, "Mg": 6, "S": 4},
+            "النمو الخضري": {"duree": 35, "N": 55, "P": 35, "K": 50, "Ca": 18, "Mg": 9, "S": 6},
+            "الازهار": {"duree": 20, "N": 45, "P": 40, "K": 55, "Ca": 22, "Mg": 11, "S": 7},
+            "الاثمار": {"duree": 30, "N": 40, "P": 35, "K": 65, "Ca": 25, "Mg": 13, "S": 9},
+        },
+        "temperature_optimale": [22, 35], "temperature_critique": [12, 42],
+        "irrigation": {"الشتلات": 4, "النمو الخضري": 6, "الازهار": 7, "الاثمار": 8},
+        "carences_sensibles": ["K", "Mg"], "excès_sensibles": ["N"],
+    },
+    "جزر": {
+        "categorie": "Légume", "cycle_jours": 100,
+        "stades": {
+            "الإنبات": {"duree": 15, "N": 18, "P": 40, "K": 35, "Ca": 10, "Mg": 5, "S": 3},
+            "النمو الخضري": {"duree": 35, "N": 48, "P": 35, "K": 48, "Ca": 14, "Mg": 8, "S": 5},
+            "تكوين الجذور": {"duree": 35, "N": 32, "P": 30, "K": 62, "Ca": 16, "Mg": 10, "S": 6},
+            "النضج": {"duree": 15, "N": 8, "P": 12, "K": 22, "Ca": 7, "Mg": 4, "S": 2},
+        },
+        "temperature_optimale": [15, 24], "temperature_critique": [4, 32],
+        "irrigation": {"الإنبات": 3, "النمو الخضري": 5, "تكوين الجذور": 6.5, "النضج": 2.5},
+        "carences_sensibles": ["K", "B"], "excès_sensibles": ["N"],
+    },
+    "خس": {
+        "categorie": "Légume", "cycle_jours": 60,
+        "stades": {
+            "الإنبات": {"duree": 8, "N": 15, "P": 28, "K": 25, "Ca": 8, "Mg": 4, "S": 2},
+            "النمو الخضري": {"duree": 35, "N": 45, "P": 30, "K": 42, "Ca": 12, "Mg": 7, "S": 4},
+            "تكوين الرأس": {"duree": 17, "N": 28, "P": 22, "K": 38, "Ca": 10, "Mg": 6, "S": 3},
+        },
+        "temperature_optimale": [12, 22], "temperature_critique": [2, 30],
+        "irrigation": {"الإنبات": 2.5, "النمو الخضري": 4.5, "تكوين الرأس": 5.5},
+        "carences_sensibles": ["N", "Ca"], "excès_sensibles": ["N"],
+    },
+    "بطيخ": {
+        "categorie": "Légume", "cycle_jours": 90,
+        "stades": {
+            "الإنبات": {"duree": 10, "N": 20, "P": 35, "K": 32, "Ca": 10, "Mg": 6, "S": 4},
+            "النمو الخضري": {"duree": 30, "N": 52, "P": 35, "K": 55, "Ca": 16, "Mg": 9, "S": 6},
+            "الازهار": {"duree": 15, "N": 42, "P": 38, "K": 62, "Ca": 19, "Mg": 11, "S": 7},
+            "نمو الثمار": {"duree": 35, "N": 38, "P": 32, "K": 72, "Ca": 22, "Mg": 13, "S": 9},
+        },
+        "temperature_optimale": [22, 35], "temperature_critique": [12, 42],
+        "irrigation": {"الإنبات": 3.5, "النمو الخضري": 6, "الازهار": 7.5, "نمو الثمار": 8.5},
+        "carences_sensibles": ["K", "Mg"], "excès_sensibles": ["N"],
+    },
+    "قرع": {
+        "categorie": "Légume", "cycle_jours": 95,
+        "stades": {
+            "الإنبات": {"duree": 10, "N": 19, "P": 34, "K": 31, "Ca": 10, "Mg": 6, "S": 4},
+            "النمو الخضري": {"duree": 32, "N": 50, "P": 34, "K": 53, "Ca": 15, "Mg": 9, "S": 6},
+            "الازهار": {"duree": 16, "N": 41, "P": 37, "K": 60, "Ca": 18, "Mg": 11, "S": 7},
+            "نمو الثمار": {"duree": 37, "N": 37, "P": 31, "K": 70, "Ca": 21, "Mg": 13, "S": 9},
+        },
+        "temperature_optimale": [20, 34], "temperature_critique": [10, 41],
+        "irrigation": {"الإنبات": 3.3, "النمو الخضري": 5.8, "الازهار": 7.2, "نمو الثمار": 8.2},
+        "carences_sensibles": ["K", "Ca"], "excès_sensibles": ["N"],
+    },
+    "فلفل حار": {
+        "categorie": "Légume", "cycle_jours": 105,
+        "stades": {
+            "الشتلات": {"duree": 26, "N": 27, "P": 41, "K": 37, "Ca": 13, "Mg": 7, "S": 4},
+            "النمو الخضري": {"duree": 32, "N": 57, "P": 37, "K": 51, "Ca": 18, "Mg": 10, "S": 6},
+            "الازهار": {"duree": 19, "N": 47, "P": 41, "K": 57, "Ca": 22, "Mg": 12, "S": 7},
+            "الاثمار": {"duree": 28, "N": 41, "P": 37, "K": 67, "Ca": 25, "Mg": 14, "S": 9},
+        },
+        "temperature_optimale": [21, 34], "temperature_critique": [11, 41],
+        "irrigation": {"الشتلات": 3.6, "النمو الخضري": 5.6, "الازهار": 6.6, "الاثمار": 7.6},
+        "carences_sensibles": ["Ca", "K"], "excès_sensibles": ["N"],
+    },
+    "لفت": {
+        "categorie": "Légume", "cycle_jours": 70,
+        "stades": {
+            "الإنبات": {"duree": 7, "N": 16, "P": 30, "K": 27, "Ca": 9, "Mg": 5, "S": 3},
+            "النمو الخضري": {"duree": 32, "N": 44, "P": 32, "K": 44, "Ca": 13, "Mg": 7, "S": 5},
+            "تكوين الجذر": {"duree": 31, "N": 30, "P": 28, "K": 56, "Ca": 15, "Mg": 9, "S": 6},
+        },
+        "temperature_optimale": [10, 22], "temperature_critique": [0, 32],
+        "irrigation": {"الإنبات": 2.4, "النمو الخضري": 4.4, "تكوين الجذر": 5.8},
+        "carences_sensibles": ["K", "B"], "excès_sensibles": ["N"],
+    },
+    "خرشوف": {
+        "categorie": "Légume", "cycle_jours": 180,
+        "stades": {
+            "النمو الخضري": {"duree": 60, "N": 35, "P": 45, "K": 48, "Ca": 16, "Mg": 9, "S": 6},
+            "تكوين البراعم": {"duree": 50, "N": 52, "P": 42, "K": 62, "Ca": 22, "Mg": 13, "S": 8},
+            "النضج": {"duree": 40, "N": 38, "P": 35, "K": 55, "Ca": 19, "Mg": 11, "S": 7},
+            "الحصاد": {"duree": 30, "N": 15, "P": 20, "K": 32, "Ca": 11, "Mg": 6, "S": 4},
+        },
+        "temperature_optimale": [14, 26], "temperature_critique": [2, 35],
+        "irrigation": {"النمو الخضري": 4.5, "تكوين البراعم": 6.5, "النضج": 5.5, "الحصاد": 3.5},
+        "carences_sensibles": ["K", "Ca"], "excès_sensibles": ["N"],
+    },
+
+    # ============================================================
+    # 🫘 البقوليات (Légumineuses)
+    # ============================================================
+    "حمص": {
+        "categorie": "Légumineuse", "cycle_jours": 110,
+        "stades": {
+            "الإنبات": {"duree": 12, "N": 15, "P": 35, "K": 28, "Ca": 10, "Mg": 5, "S": 3},
+            "النمو الخضري": {"duree": 40, "N": 38, "P": 42, "K": 45, "Ca": 15, "Mg": 8, "S": 5},
+            "الازهار": {"duree": 25, "N": 32, "P": 48, "K": 52, "Ca": 18, "Mg": 10, "S": 6},
+            "امتلاء القرون": {"duree": 33, "N": 22, "P": 35, "K": 42, "Ca": 14, "Mg": 8, "S": 5},
+        },
+        "temperature_optimale": [18, 30], "temperature_critique": [5, 38],
+        "irrigation": {"الإنبات": 2.8, "النمو الخضري": 4.2, "الازهار": 5.5, "امتلاء القرون": 4},
+        "carences_sensibles": ["P", "K"], "excès_sensibles": ["N"],
+    },
+    "عدس": {
+        "categorie": "Légumineuse", "cycle_jours": 100,
+        "stades": {
+            "الإنبات": {"duree": 10, "N": 14, "P": 32, "K": 26, "Ca": 9, "Mg": 5, "S": 3},
+            "النمو الخضري": {"duree": 38, "N": 36, "P": 40, "K": 43, "Ca": 14, "Mg": 8, "S": 5},
+            "الازهار": {"duree": 22, "N": 30, "P": 46, "K": 50, "Ca": 17, "Mg": 10, "S": 6},
+            "امتلاء القرون": {"duree": 30, "N": 20, "P": 33, "K": 40, "Ca": 13, "Mg": 7, "S": 4},
+        },
+        "temperature_optimale": [16, 28], "temperature_critique": [3, 36],
+        "irrigation": {"الإنبات": 2.6, "النمو الخضري": 4, "الازهار": 5.2, "امتلاء القرون": 3.8},
+        "carences_sensibles": ["P", "K"], "excès_sensibles": ["N"],
+    },
+    "فول": {
+        "categorie": "Légumineuse", "cycle_jours": 120,
+        "stades": {
+            "الإنبات": {"duree": 14, "N": 16, "P": 36, "K": 30, "Ca": 11, "Mg": 6, "S": 4},
+            "النمو الخضري": {"duree": 42, "N": 40, "P": 44, "K": 47, "Ca": 16, "Mg": 9, "S": 6},
+            "الازهار": {"duree": 28, "N": 34, "P": 50, "K": 54, "Ca": 19, "Mg": 11, "S": 7},
+            "امتلاء القرون": {"duree": 36, "N": 24, "P": 37, "K": 44, "Ca": 15, "Mg": 9, "S": 5},
+        },
+        "temperature_optimale": [15, 26], "temperature_critique": [2, 35],
+        "irrigation": {"الإنبات": 3, "النمو الخضري": 4.5, "الازهار": 5.8, "امتلاء القرون": 4.2},
+        "carences_sensibles": ["P", "K"], "excès_sensibles": ["N"],
+    },
+    "فاصوليا خضراء": {
+        "categorie": "Légumineuse", "cycle_jours": 75,
+        "stades": {
+            "الإنبات": {"duree": 9, "N": 13, "P": 30, "K": 25, "Ca": 9, "Mg": 5, "S": 3},
+            "النمو الخضري": {"duree": 28, "N": 34, "P": 38, "K": 41, "Ca": 13, "Mg": 7, "S": 5},
+            "الازهار": {"duree": 15, "N": 28, "P": 42, "K": 46, "Ca": 16, "Mg": 9, "S": 6},
+            "تكوين القرون": {"duree": 23, "N": 20, "P": 32, "K": 38, "Ca": 12, "Mg": 7, "S": 4},
+        },
+        "temperature_optimale": [18, 30], "temperature_critique": [8, 38],
+        "irrigation": {"الإنبات": 2.5, "النمو الخضري": 4, "الازهار": 5, "تكوين القرون": 4.5},
+        "carences_sensibles": ["P", "K"], "excès_sensibles": ["N"],
+    },
+    "بازلاء": {
+        "categorie": "Légumineuse", "cycle_jours": 90,
+        "stades": {
+            "الإنبات": {"duree": 11, "N": 14, "P": 33, "K": 27, "Ca": 10, "Mg": 5, "S": 3},
+            "النمو الخضري": {"duree": 35, "N": 37, "P": 41, "K": 44, "Ca": 14, "Mg": 8, "S": 5},
+            "الازهار": {"duree": 20, "N": 31, "P": 45, "K": 49, "Ca": 17, "Mg": 10, "S": 6},
+            "امتلاء القرون": {"duree": 24, "N": 21, "P": 34, "K": 41, "Ca": 13, "Mg": 8, "S": 5},
+        },
+        "temperature_optimale": [14, 24], "temperature_critique": [1, 32],
+        "irrigation": {"الإنبات": 2.7, "النمو الخضري": 4.3, "الازهار": 5.4, "امتلاء القرون": 4},
+        "carences_sensibles": ["P", "K"], "excès_sensibles": ["N"],
+    },
+
+    # ============================================================
+    # 🌳 الأشجار المثمرة (Arbres fruitiers)
+    # ============================================================
     "زيتون": {
         "categorie": "Arbre fruitier", "cycle_jours": 365,
         "stades": {
@@ -227,14 +487,198 @@ CROPS_DATABASE = {
             "نمو الثمار": {"duree": 120, "N": 40, "P": 35, "K": 60, "Ca": 20, "Mg": 10, "S": 7},
             "نضج": {"duree": 110, "N": 15, "P": 20, "K": 25, "Ca": 10, "Mg": 5, "S": 3},
         },
-        "temperature_optimale": [10, 35],
-        "temperature_critique": [-5, 45],
+        "temperature_optimale": [10, 35], "temperature_critique": [-5, 45],
         "irrigation": {"سكون شتوي": 1, "إزهار": 3, "نمو الثمار": 5, "نضج": 2},
-        "carences_sensibles": ["B", "K"],
-        "excès_sensibles": ["Na"],
+        "carences_sensibles": ["B", "K"], "excès_sensibles": ["Na"],
+    },
+    "نخيل التمر": {
+        "categorie": "Arbre fruitier", "cycle_jours": 365,
+        "stades": {
+            "سكون شتوي": {"duree": 60, "N": 18, "P": 28, "K": 42, "Ca": 12, "Mg": 6, "S": 4},
+            "طلع": {"duree": 45, "N": 32, "P": 42, "K": 55, "Ca": 16, "Mg": 9, "S": 6},
+            "حبابوك": {"duree": 50, "N": 38, "P": 38, "K": 62, "Ca": 19, "Mg": 11, "S": 7},
+            "بسر": {"duree": 60, "N": 35, "P": 35, "K": 68, "Ca": 21, "Mg": 12, "S": 8},
+            "رطب/تمر": {"duree": 150, "N": 22, "P": 28, "K": 52, "Ca": 17, "Mg": 10, "S": 6},
+        },
+        "temperature_optimale": [25, 40], "temperature_critique": [5, 50],
+        "irrigation": {"سكون شتوي": 2, "طلع": 4, "حبابوك": 6, "بسر": 7, "رطب/تمر": 5},
+        "carences_sensibles": ["K", "Mg"], "excès_sensibles": ["Cl"],
+    },
+    "تين": {
+        "categorie": "Arbre fruitier", "cycle_jours": 365,
+        "stades": {
+            "سكون شتوي": {"duree": 70, "N": 16, "P": 26, "K": 32, "Ca": 11, "Mg": 6, "S": 3},
+            "إزهار": {"duree": 40, "N": 30, "P": 38, "K": 45, "Ca": 14, "Mg": 8, "S": 5},
+            "نمو الثمار": {"duree": 90, "N": 35, "P": 32, "K": 52, "Ca": 17, "Mg": 10, "S": 6},
+            "النضج": {"duree": 165, "N": 18, "P": 24, "K": 38, "Ca": 13, "Mg": 7, "S": 4},
+        },
+        "temperature_optimale": [18, 35], "temperature_critique": [-8, 42],
+        "irrigation": {"سكون شتوي": 1.5, "إزهار": 3.5, "نمو الثمار": 5.5, "النضج": 3},
+        "carences_sensibles": ["K", "B"], "excès_sensibles": ["N"],
+    },
+    "رمان": {
+        "categorie": "Arbre fruitier", "cycle_jours": 365,
+        "stades": {
+            "سكون شتوي": {"duree": 75, "N": 19, "P": 29, "K": 36, "Ca": 12, "Mg": 6, "S": 4},
+            "إزهار": {"duree": 45, "N": 34, "P": 42, "K": 48, "Ca": 15, "Mg": 9, "S": 5},
+            "نمو الثمار": {"duree": 110, "N": 38, "P": 36, "K": 58, "Ca": 19, "Mg": 11, "S": 7},
+            "النضج": {"duree": 135, "N": 20, "P": 26, "K": 42, "Ca": 14, "Mg": 8, "S": 5},
+        },
+        "temperature_optimale": [20, 38], "temperature_critique": [-5, 45],
+        "irrigation": {"سكون شتوي": 1.8, "إزهار": 3.8, "نمو الثمار": 6, "النضج": 3.5},
+        "carences_sensibles": ["K", "Zn"], "excès_sensibles": ["N"],
+    },
+    "كرمة": {
+        "categorie": "Arbre fruitier", "cycle_jours": 365,
+        "stades": {
+            "سكون شتوي": {"duree": 80, "N": 17, "P": 27, "K": 38, "Ca": 11, "Mg": 6, "S": 4},
+            "إزهار": {"duree": 40, "N": 32, "P": 40, "K": 50, "Ca": 14, "Mg": 8, "S": 5},
+            "عقد الثمار": {"duree": 50, "N": 36, "P": 36, "K": 56, "Ca": 17, "Mg": 10, "S": 6},
+            "نمو الثمار": {"duree": 70, "N": 33, "P": 33, "K": 62, "Ca": 19, "Mg": 11, "S": 7},
+            "النضج": {"duree": 125, "N": 19, "P": 25, "K": 44, "Ca": 14, "Mg": 8, "S": 5},
+        },
+        "temperature_optimale": [18, 32], "temperature_critique": [-10, 40],
+        "irrigation": {"سكون شتوي": 1.2, "إزهار": 3.2, "عقد الثمار": 4.8, "نمو الثمار": 5.5, "النضج": 2.5},
+        "carences_sensibles": ["K", "Mg"], "excès_sensibles": ["N"],
+    },
+    "لوز": {
+        "categorie": "Arbre fruitier", "cycle_jours": 365,
+        "stades": {
+            "سكون شتوي": {"duree": 85, "N": 18, "P": 28, "K": 34, "Ca": 11, "Mg": 6, "S": 4},
+            "إزهار": {"duree": 35, "N": 33, "P": 41, "K": 46, "Ca": 14, "Mg": 8, "S": 5},
+            "نمو الثمار": {"duree": 100, "N": 37, "P": 34, "K": 54, "Ca": 18, "Mg": 10, "S": 6},
+            "النضج": {"duree": 145, "N": 19, "P": 25, "K": 40, "Ca": 13, "Mg": 7, "S": 4},
+        },
+        "temperature_optimale": [15, 32], "temperature_critique": [-8, 42],
+        "irrigation": {"سكون شتوي": 1.5, "إزهار": 3.5, "نمو الثمار": 5.5, "النضج": 3},
+        "carences_sensibles": ["Zn", "B"], "excès_sensibles": ["N"],
+    },
+    "مشمش": {
+        "categorie": "Arbre fruitier", "cycle_jours": 365,
+        "stades": {
+            "سكون شتوي": {"duree": 90, "N": 19, "P": 30, "K": 35, "Ca": 12, "Mg": 6, "S": 4},
+            "إزهار": {"duree": 30, "N": 34, "P": 43, "K": 47, "Ca": 15, "Mg": 9, "S": 5},
+            "نمو الثمار": {"duree": 70, "N": 38, "P": 36, "K": 55, "Ca": 18, "Mg": 11, "S": 7},
+            "النضج": {"duree": 175, "N": 20, "P": 26, "K": 41, "Ca": 14, "Mg": 8, "S": 5},
+        },
+        "temperature_optimale": [16, 30], "temperature_critique": [-12, 40],
+        "irrigation": {"سكون شتوي": 1.6, "إزهار": 3.6, "نمو الثمار": 5.6, "النضج": 3.2},
+        "carences_sensibles": ["K", "Ca"], "excès_sensibles": ["N"],
+    },
+    "خوخ": {
+        "categorie": "Arbre fruitier", "cycle_jours": 365,
+        "stades": {
+            "سكون شتوي": {"duree": 85, "N": 20, "P": 31, "K": 36, "Ca": 12, "Mg": 7, "S": 4},
+            "إزهار": {"duree": 32, "N": 35, "P": 44, "K": 48, "Ca": 15, "Mg": 9, "S": 5},
+            "نمو الثمار": {"duree": 75, "N": 39, "P": 37, "K": 56, "Ca": 19, "Mg": 11, "S": 7},
+            "النضج": {"duree": 173, "N": 21, "P": 27, "K": 42, "Ca": 14, "Mg": 8, "S": 5},
+        },
+        "temperature_optimale": [17, 31], "temperature_critique": [-10, 41],
+        "irrigation": {"سكون شتوي": 1.7, "إزهار": 3.7, "نمو الثمار": 5.7, "النضج": 3.3},
+        "carences_sensibles": ["K", "Ca"], "excès_sensibles": ["N"],
+    },
+    "برقوق": {
+        "categorie": "Arbre fruitier", "cycle_jours": 365,
+        "stades": {
+            "سكون شتوي": {"duree": 88, "N": 19, "P": 30, "K": 35, "Ca": 12, "Mg": 6, "S": 4},
+            "إزهار": {"duree": 31, "N": 34, "P": 43, "K": 47, "Ca": 15, "Mg": 9, "S": 5},
+            "نمو الثمار": {"duree": 72, "N": 38, "P": 36, "K": 55, "Ca": 18, "Mg": 11, "S": 7},
+            "النضج": {"duree": 174, "N": 20, "P": 26, "K": 41, "Ca": 14, "Mg": 8, "S": 5},
+        },
+        "temperature_optimale": [16, 30], "temperature_critique": [-11, 40],
+        "irrigation": {"سكون شتوي": 1.6, "إزهار": 3.6, "نمو الثمار": 5.6, "النضج": 3.2},
+        "carences_sensibles": ["K", "Ca"], "excès_sensibles": ["N"],
+    },
+    "كرز": {
+        "categorie": "Arbre fruitier", "cycle_jours": 365,
+        "stades": {
+            "سكون شتوي": {"duree": 92, "N": 18, "P": 29, "K": 34, "Ca": 11, "Mg": 6, "S": 4},
+            "إزهار": {"duree": 28, "N": 33, "P": 42, "K": 46, "Ca": 14, "Mg": 8, "S": 5},
+            "نمو الثمار": {"duree": 65, "N": 37, "P": 35, "K": 54, "Ca": 18, "Mg": 10, "S": 6},
+            "النضج": {"duree": 180, "N": 19, "P": 25, "K": 40, "Ca": 13, "Mg": 7, "S": 4},
+        },
+        "temperature_optimale": [14, 28], "temperature_critique": [-15, 38],
+        "irrigation": {"سكون شتوي": 1.4, "إزهار": 3.4, "نمو الثمار": 5.4, "النضج": 3},
+        "carences_sensibles": ["Ca", "B"], "excès_sensibles": ["N"],
+    },
+    "حمضيات (برتقال)": {
+        "categorie": "Arbre fruitier", "cycle_jours": 365,
+        "stades": {
+            "سكون شتوي": {"duree": 60, "N": 22, "P": 32, "K": 40, "Ca": 13, "Mg": 7, "S": 5},
+            "إزهار": {"duree": 40, "N": 38, "P": 46, "K": 52, "Ca": 17, "Mg": 10, "S": 6},
+            "عقد الثمار": {"duree": 50, "N": 42, "P": 40, "K": 58, "Ca": 20, "Mg": 12, "S": 7},
+            "نمو الثمار": {"duree": 120, "N": 40, "P": 38, "K": 65, "Ca": 22, "Mg": 13, "S": 8},
+            "النضج": {"duree": 95, "N": 24, "P": 30, "K": 48, "Ca": 16, "Mg": 9, "S": 6},
+        },
+        "temperature_optimale": [18, 32], "temperature_critique": [-2, 42],
+        "irrigation": {"سكون شتوي": 2, "إزهار": 4, "عقد الثمار": 5.5, "نمو الثمار": 6.5, "النضج": 4},
+        "carences_sensibles": ["Zn", "Fe", "Mg"], "excès_sensibles": ["Cl"],
+    },
+    "ليمون": {
+        "categorie": "Arbre fruitier", "cycle_jours": 365,
+        "stades": {
+            "سكون شتوي": {"duree": 55, "N": 21, "P": 31, "K": 39, "Ca": 13, "Mg": 7, "S": 5},
+            "إزهار": {"duree": 42, "N": 37, "P": 45, "K": 51, "Ca": 17, "Mg": 10, "S": 6},
+            "عقد الثمار": {"duree": 48, "N": 41, "P": 39, "K": 57, "Ca": 19, "Mg": 11, "S": 7},
+            "نمو الثمار": {"duree": 115, "N": 39, "P": 37, "K": 64, "Ca": 21, "Mg": 12, "S": 8},
+            "النضج": {"duree": 105, "N": 23, "P": 29, "K": 47, "Ca": 15, "Mg": 9, "S": 6},
+        },
+        "temperature_optimale": [19, 33], "temperature_critique": [-1, 43],
+        "irrigation": {"سكون شتوي": 2.1, "إزهار": 4.1, "عقد الثمار": 5.6, "نمو الثمار": 6.6, "النضج": 4.1},
+        "carences_sensibles": ["Zn", "Fe", "Mg"], "excès_sensibles": ["Cl"],
+    },
+
+    # ============================================================
+    # 🏭 الصناعية (Cultures industrielles)
+    # ============================================================
+    "عباد الشمس": {
+        "categorie": "Industrielle", "cycle_jours": 110,
+        "stades": {
+            "الإنبات": {"duree": 12, "N": 20, "P": 38, "K": 35, "Ca": 11, "Mg": 6, "S": 4},
+            "النمو الخضري": {"duree": 42, "N": 55, "P": 40, "K": 52, "Ca": 16, "Mg": 10, "S": 7},
+            "الازهار": {"duree": 22, "N": 45, "P": 42, "K": 58, "Ca": 19, "Mg": 12, "S": 8},
+            "امتلاء البذور": {"duree": 34, "N": 30, "P": 32, "K": 48, "Ca": 14, "Mg": 9, "S": 6},
+        },
+        "temperature_optimale": [20, 32], "temperature_critique": [6, 40],
+        "irrigation": {"الإنبات": 3.2, "النمو الخضري": 5.5, "الازهار": 7, "امتلاء البذور": 5},
+        "carences_sensibles": ["B", "K"], "excès_sensibles": ["N"],
+    },
+    "شمندر السكر": {
+        "categorie": "Industrielle", "cycle_jours": 160,
+        "stades": {
+            "الإنبات": {"duree": 18, "N": 22, "P": 42, "K": 45, "Ca": 14, "Mg": 8, "S": 5},
+            "النمو الخضري": {"duree": 55, "N": 58, "P": 45, "K": 62, "Ca": 20, "Mg": 12, "S": 8},
+            "تكوين الجذور": {"duree": 50, "N": 42, "P": 40, "K": 72, "Ca": 24, "Mg": 15, "S": 10},
+            "تراكم السكر": {"duree": 37, "N": 25, "P": 32, "K": 55, "Ca": 18, "Mg": 11, "S": 7},
+        },
+        "temperature_optimale": [15, 25], "temperature_critique": [2, 35],
+        "irrigation": {"الإنبات": 3.5, "النمو الخضري": 5.8, "تكوين الجذور": 7.2, "تراكم السكر": 4.5},
+        "carences_sensibles": ["B", "K"], "excès_sensibles": ["N"],
+    },
+    "قطن": {
+        "categorie": "Industrielle", "cycle_jours": 140,
+        "stades": {
+            "الإنبات": {"duree": 14, "N": 24, "P": 40, "K": 38, "Ca": 12, "Mg": 7, "S": 5},
+            "النمو الخضري": {"duree": 48, "N": 62, "P": 42, "K": 58, "Ca": 18, "Mg": 11, "S": 8},
+            "الازهار": {"duree": 30, "N": 52, "P": 45, "K": 68, "Ca": 22, "Mg": 14, "S": 9},
+            "تكوين اللوز": {"duree": 48, "N": 38, "P": 38, "K": 62, "Ca": 19, "Mg": 12, "S": 8},
+        },
+        "temperature_optimale": [22, 36], "temperature_critique": [12, 44],
+        "irrigation": {"الإنبات": 3.4, "النمو الخضري": 6, "الازهار": 7.5, "تكوين اللوز": 6.5},
+        "carences_sensibles": ["K", "Zn"], "excès_sensibles": ["N"],
+    },
+    "تبغ": {
+        "categorie": "Industrielle", "cycle_jours": 100,
+        "stades": {
+            "الشتلات": {"duree": 25, "N": 18, "P": 32, "K": 28, "Ca": 10, "Mg": 5, "S": 3},
+            "النمو الخضري": {"duree": 35, "N": 48, "P": 38, "K": 45, "Ca": 15, "Mg": 9, "S": 6},
+            "النضج": {"duree": 40, "N": 35, "P": 32, "K": 52, "Ca": 18, "Mg": 11, "S": 7},
+        },
+        "temperature_optimale": [20, 30], "temperature_critique": [10, 38],
+        "irrigation": {"الشتلات": 3, "النمو الخضري": 5.5, "النضج": 4.5},
+        "carences_sensibles": ["K", "Mg"], "excès_sensibles": ["Cl"],
     },
 }
-
 # قاعدة بيانات الأسمدة
 FERTILIZER_DATABASE = {
     "Urea": {"name": "اليوريا", "icon": "🍚", "composition": {"N": 46, "P": 0, "K": 0}, "how": "نثر أو حقن", "when": "مراحل النمو الخضري"},
