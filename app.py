@@ -1,3 +1,4 @@
+# app.py - AgriPal Fertilizer API [FINAL CORRECTED]
 import json
 import os
 from datetime import datetime, date, timedelta
@@ -8,19 +9,17 @@ import warnings
 warnings.filterwarnings('ignore')
 
 app = Flask(__name__)
-CORS(app)  # السماح بـ CORS للاتصال من Flutter
+CORS(app)
 
 # ============================================================
-# مفتاح API لخدمة الطقس - سيتم قراءته من متغيرات البيئة
+# إعدادات الطقس
 # ============================================================
 OPENWEATHER_API_KEY = os.environ.get('OPENWEATHER_API_KEY', '')
 OPENMETEO_API_URL = "https://api.open-meteo.com/v1/forecast"
 
 # ============================================================
-# BASE DE DONNÉES COMPLÈTE
+# 📍 58 WILAYAS
 # ============================================================
-
-# 58 Wilayas - التصحيح: إضافة الأسماء العربية مباشرة
 WILAYA_COORDINATES = {
     "أدرار": {"lat": 27.8667, "lon": -0.2833, "code": 1, "region": "Sud-Ouest"},
     "الشلف": {"lat": 36.1650, "lon": 1.3317, "code": 2, "region": "Nord-Ouest"},
@@ -82,7 +81,9 @@ WILAYA_COORDINATES = {
     "المنيعة": {"lat": 30.5833, "lon": 2.8833, "code": 58, "region": "Sud"}
 }
 
-# Type de sol par wilaya
+# ============================================================
+# 🌍 نوع التربة حسب الولاية
+# ============================================================
 WILAYA_SOIL_MAPPING = {
     "أدرار": "Sols sableux (Erg)", "الشلف": "Sols alluviaux", "الأغواط": "Sols sableux (Erg)",
     "أم البواقي": "Vertisols", "باتنة": "Sols peu évolués d'érosion",
@@ -113,7 +114,9 @@ WILAYA_SOIL_MAPPING = {
     "المغير": "Sols hydromorphes (Oasis)", "المنيعة": "Sols sableux (Erg)"
 }
 
-# تحليل العناصر الغذائية للتربة
+# ============================================================
+# 🧪 تحليل العناصر الغذائية للتربة
+# ============================================================
 SOL_NUTRIENTS_COMPLET = {
     "Sols alluviaux": {
         "N": 85, "P": 45, "K": 180, "Ca": 2500, "Mg": 350, "S": 25,
@@ -159,12 +162,11 @@ SOL_NUTRIENTS_COMPLET = {
     }
 }
 
-# قاعدة بيانات المحاصيل
-# قاعدة بيانات المحاصيل - جميع المحاصيل مدعومة ✅
+# ============================================================
+# 🌾 قاعدة بيانات المحاصيل - جميع المحاصيل الـ 29 ✅
+# ============================================================
 CROPS_DATABASE = {
-    # ============================================================
-    # 🌾 الحبوب (Céréales)
-    # ============================================================
+    # 🌾 الحبوب
     "قمح صلب": {
         "categorie": "Céréale", "cycle_jours": 180,
         "stades": {
@@ -241,10 +243,7 @@ CROPS_DATABASE = {
         "irrigation": {"الإنبات": 2.6, "الخضري": 4.6, "الاستطالة": 5.6, "التسنبل": 6.6, "النضج": 1.6},
         "carences_sensibles": ["N", "K"], "excès_sensibles": ["N"],
     },
-
-    # ============================================================
-    # 🥦 الخضروات (Légumes)
-    # ============================================================
+    # 🥦 الخضروات
     "طماطم": {
         "categorie": "Légume", "cycle_jours": 120,
         "stades": {
@@ -411,10 +410,7 @@ CROPS_DATABASE = {
         "irrigation": {"النمو الخضري": 4.5, "تكوين البراعم": 6.5, "النضج": 5.5, "الحصاد": 3.5},
         "carences_sensibles": ["K", "Ca"], "excès_sensibles": ["N"],
     },
-
-    # ============================================================
-    # 🫘 البقوليات (Légumineuses)
-    # ============================================================
+    # 🫘 البقوليات
     "حمص": {
         "categorie": "Légumineuse", "cycle_jours": 110,
         "stades": {
@@ -475,10 +471,7 @@ CROPS_DATABASE = {
         "irrigation": {"الإنبات": 2.7, "النمو الخضري": 4.3, "الازهار": 5.4, "امتلاء القرون": 4},
         "carences_sensibles": ["P", "K"], "excès_sensibles": ["N"],
     },
-
-    # ============================================================
-    # 🌳 الأشجار المثمرة (Arbres fruitiers)
-    # ============================================================
+    # 🌳 الأشجار المثمرة
     "زيتون": {
         "categorie": "Arbre fruitier", "cycle_jours": 365,
         "stades": {
@@ -627,10 +620,7 @@ CROPS_DATABASE = {
         "irrigation": {"سكون شتوي": 2.1, "إزهار": 4.1, "عقد الثمار": 5.6, "نمو الثمار": 6.6, "النضج": 4.1},
         "carences_sensibles": ["Zn", "Fe", "Mg"], "excès_sensibles": ["Cl"],
     },
-
-    # ============================================================
-    # 🏭 الصناعية (Cultures industrielles)
-    # ============================================================
+    # 🏭 الصناعية
     "عباد الشمس": {
         "categorie": "Industrielle", "cycle_jours": 110,
         "stades": {
@@ -679,7 +669,10 @@ CROPS_DATABASE = {
         "carences_sensibles": ["K", "Mg"], "excès_sensibles": ["Cl"],
     },
 }
-# قاعدة بيانات الأسمدة
+
+# ============================================================
+# 🧪 قاعدة بيانات الأسمدة
+# ============================================================
 FERTILIZER_DATABASE = {
     "Urea": {"name": "اليوريا", "icon": "🍚", "composition": {"N": 46, "P": 0, "K": 0}, "how": "نثر أو حقن", "when": "مراحل النمو الخضري"},
     "TSP": {"name": "سوبر فوسفات ثلاثي", "icon": "🦴", "composition": {"N": 0, "P": 46, "K": 0}, "how": "خلط مع التربة", "when": "قبل الزراعة أو عند الإنبات"},
@@ -690,7 +683,9 @@ FERTILIZER_DATABASE = {
     "NPK_20_20_20": {"name": "سماد مركب NPK (20-20-20)", "icon": "🌱", "composition": {"N": 20, "P": 20, "K": 20}, "how": "ري أو رش ورقي", "when": "مراحل النمو العامة"},
 }
 
-# حدود النقص والزيادة
+# ============================================================
+# ⚠️ حدود النقص والزيادة
+# ============================================================
 SEUILS_EXCES = {
     "N": {"max": 300, "message": "Excès d'azote → Risque verse, nitrates, pollution nappe"},
     "P": {"max": 100, "message": "Excès de phosphore → Blocage Zn/Fe, eutrophisation"},
@@ -712,32 +707,30 @@ SEUILS_EXCES = {
 }
 
 # ============================================================
-# دوال جلب بيانات الطقس الحقيقية
+# 🌦️ دوال جلب بيانات الطقس
 # ============================================================
-
 def get_weather_data_openmeteo(lat, lon):
-    """جلب بيانات الطقس من Open-Meteo API (مجاني، لا يحتاج مفتاح)"""
+    """جلب بيانات الطقس من Open-Meteo API مع معالجة الأخطاء"""
     try:
         params = {
-            "latitude": lat,
-            "longitude": lon,
+            "latitude": lat, "longitude": lon,
             "current_weather": "true",
             "daily": "temperature_2m_max,temperature_2m_min,precipitation_sum,rain_sum,weathercode",
-            "timezone": "auto",
-            "forecast_days": 7
+            "timezone": "auto", "forecast_days": 7
         }
         response = requests.get(OPENMETEO_API_URL, params=params, timeout=10)
+        
+        # ✅ معالجة حالة 429 (Rate Limit)
+        if response.status_code == 429:
+            print(f"⚠️ OpenMeteo rate limit reached for ({lat}, {lon})")
+            return None
         response.raise_for_status()
         data = response.json()
         
         current = data.get("current_weather", {})
         daily = data.get("daily", {})
-        
-        # حساب متوسط درجة الحرارة للأيام القادمة
         daily_temps = daily.get("temperature_2m_max", [])
         avg_temp = sum(daily_temps[:5]) / len(daily_temps[:5]) if daily_temps else current.get("temperature", 20)
-        
-        # حساب إجمالي الأمطار المتوقعة
         total_rain = sum(daily.get("precipitation_sum", [])[:7])
         
         return {
@@ -746,34 +739,33 @@ def get_weather_data_openmeteo(lat, lon):
             "temperature_max": daily.get("temperature_2m_max", [25])[0] if daily.get("temperature_2m_max") else 25,
             "avg_temp_7days": round(avg_temp, 1),
             "precipitation": total_rain,
-            "humidity": 65,  # Open-Meteo current doesn't provide humidity directly
+            "humidity": 65,
             "wind_speed": current.get("windspeed", 10),
             "weather_code": current.get("weathercode", 0),
             "forecast_days": daily_temps,
             "source": "Open-Meteo"
         }
-    except Exception as e:
+    except requests.exceptions.RequestException as e:
         print(f"Error fetching OpenMeteo weather: {e}")
         return None
-
+    except Exception as e:
+        print(f"Unexpected error in get_weather_data_openmeteo: {e}")
+        return None
 
 def get_weather_data_openweather(lat, lon):
-    """جلب بيانات الطقس من OpenWeather API (يتطلب مفتاح API)"""
+    """جلب بيانات الطقس من OpenWeather API"""
     if not OPENWEATHER_API_KEY:
         return None
-    
     try:
         url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={OPENWEATHER_API_KEY}&units=metric"
         response = requests.get(url, timeout=10)
         response.raise_for_status()
         data = response.json()
         
-        # جلب التوقعات للأيام القادمة
         forecast_url = f"https://api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={OPENWEATHER_API_KEY}&units=metric"
         forecast_response = requests.get(forecast_url, timeout=10)
         forecast_data = forecast_response.json() if forecast_response.status_code == 200 else None
         
-        # حساب متوسط درجة الحرارة من التوقعات
         avg_temp = 20
         total_rain = 0
         if forecast_data and "list" in forecast_data:
@@ -796,43 +788,26 @@ def get_weather_data_openweather(lat, lon):
         print(f"Error fetching OpenWeather weather: {e}")
         return None
 
-
 def get_weather_data(lat, lon):
-    """الحصول على بيانات الطقس من المصدر المتاح"""
-    # محاولة Open-Meteo أولاً (مجاني)
+    """الحصول على بيانات الطقس من المصدر المتاح مع fallback"""
     weather = get_weather_data_openmeteo(lat, lon)
-    
-    # إذا فشل، جرب OpenWeather إذا كان المفتاح موجوداً
     if weather is None and OPENWEATHER_API_KEY:
         weather = get_weather_data_openweather(lat, lon)
-    
-    # إذا فشل كلاهما، أرجع بيانات افتراضية
     if weather is None:
         weather = {
-            "temperature": 22,
-            "temperature_min": 15,
-            "temperature_max": 30,
-            "avg_temp_7days": 22,
-            "precipitation": 5,
-            "humidity": 60,
-            "wind_speed": 10,
-            "source": "Default"
+            "temperature": 22, "temperature_min": 15, "temperature_max": 30,
+            "avg_temp_7days": 22, "precipitation": 5, "humidity": 60,
+            "wind_speed": 10, "source": "Default"
         }
-    
     return weather
 
-
 # ============================================================
-# دوال التحليل والتوصية
+# 🧮 دوال التحليل والتوصية
 # ============================================================
-
 def detecter_exces_et_desequilibres(soil_data, stade_data, engrais_apportes):
-    alertes_critiques = []
-    avertissements = []
-    conseils_correctifs = []
+    alertes_critiques, avertissements, conseils_correctifs = [], [], []
     niveau_risque = "Faible"
-
-    # تحليل النسب
+    
     n_val = soil_data.get("N", 0) + engrais_apportes.get("N", 0)
     p_val = soil_data.get("P", 0) + engrais_apportes.get("P", 0)
     k_val = soil_data.get("K", 0) + engrais_apportes.get("K", 0)
@@ -857,7 +832,6 @@ def detecter_exces_et_desequilibres(soil_data, stade_data, engrais_apportes):
         if ratio_camg < SEUILS_EXCES["ratio_CaMg"]["min"] or ratio_camg > SEUILS_EXCES["ratio_CaMg"]["max"]:
             avertissements.append(SEUILS_EXCES["ratio_CaMg"]["message"])
 
-    # تحليل pH
     ph_sol = soil_data.get("ph", 7.0)
     if ph_sol < SEUILS_EXCES["ph_acide"]["max"]:
         alertes_critiques.append(SEUILS_EXCES["ph_acide"]["message"])
@@ -868,35 +842,24 @@ def detecter_exces_et_desequilibres(soil_data, stade_data, engrais_apportes):
         conseils_correctifs.append("خفض pH التربة (إضافة الكبريت).")
         niveau_risque = "Élevé"
 
-    # تحليل المادة العضوية
     mo_pct = soil_data.get("mo_pct", 0)
     if mo_pct < SEUILS_EXCES["mo_faible"]["max"]:
         avertissements.append(SEUILS_EXCES["mo_faible"]["message"])
         conseils_correctifs.append("زيادة المادة العضوية (سماد عضوي، كمبوست).")
 
-    return {
-        "alertes_critiques": alertes_critiques,
-        "avertissements": avertissements,
-        "conseils_correctifs": conseils_correctifs,
-        "niveau_risque": niveau_risque
-    }
-
+    return {"alertes_critiques": alertes_critiques, "avertissements": avertissements, "conseils_correctifs": conseils_correctifs, "niveau_risque": niveau_risque}
 
 def calculer_stade(date_plantation_str, culture_data):
     try:
         date_plantation = datetime.strptime(date_plantation_str, '%Y-%m-%d').date()
     except ValueError:
         return None
-    
     today = date.today()
     jours_ecoules = (today - date_plantation).days
-
     if jours_ecoules < 0:
         return None
-
     stades = culture_data["stades"]
     cycle_jours = culture_data["cycle_jours"]
-
     jours_cumules = 0
     stade_actuel = None
     for nom_stade, info_stade in stades.items():
@@ -904,60 +867,44 @@ def calculer_stade(date_plantation_str, culture_data):
         if jours_ecoules <= jours_cumules:
             stade_actuel = nom_stade
             break
-    
     if stade_actuel is None and jours_ecoules > cycle_jours:
         stade_actuel = list(stades.keys())[-1]
-
     if stade_actuel is None:
         return None
-
     progression = min(100, round((jours_ecoules / cycle_jours) * 100, 1))
     days_remaining = max(0, cycle_jours - jours_ecoules)
+    return {"stade": stade_actuel, "jours_ecoules": jours_ecoules, "progression": progression, "days_remaining": days_remaining}
 
-    return {
-        "stade": stade_actuel,
-        "jours_ecoules": jours_ecoules,
-        "progression": progression,
-        "days_remaining": days_remaining
-    }
-
-
+# ✅ ✅ ✅ الدالة المصححة: استخدام "deficit" بدلاً من "manque" ✅ ✅ ✅
 def get_fertilizer_recommendations(manques, area):
     recommended_fertilizers = []
-    
     nutrient_deficits = {
-        "N": manques["N"]["manque"],
-        "P": manques["P"]["manque"],
-        "K": manques["K"]["manque"],
+        "N": manques["N"].get("deficit", 0),
+        "P": manques["P"].get("deficit", 0),
+        "K": manques["K"].get("deficit", 0),
     }
-    
     sorted_deficits = sorted(nutrient_deficits.items(), key=lambda item: item[1], reverse=True)
-
     for nutrient, deficit_amount in sorted_deficits:
         if deficit_amount > 0:
             for fert_key, fert_data in FERTILIZER_DATABASE.items():
                 if fert_data["composition"].get(nutrient, 0) > 0:
                     nutrient_percentage = fert_data["composition"][nutrient]
                     required_fert_kg_ha = (deficit_amount / nutrient_percentage) * 100 if nutrient_percentage > 0 else 0
-                    
                     if required_fert_kg_ha > 0.1:
                         recommended_fertilizers.append({
-                            "name": fert_data["name"],
-                            "icon": fert_data["icon"],
-                            "kgHa": round(required_fert_kg_ha, 1),
-                            "how": fert_data["how"],
-                            "when": fert_data["when"],
-                            "composition": fert_data["composition"],
+                            "name": fert_data["name"], "icon": fert_data["icon"],
+                            "kgHa": round(required_fert_kg_ha, 1), "how": fert_data["how"],
+                            "when": fert_data["when"], "composition": fert_data["composition"],
                         })
-                        manques[nutrient]["manque"] = 0
+                        manques[nutrient]["deficit"] = 0  # ✅ التصحيح هنا
                         break
-
     for nutrient in ["Ca", "Mg", "S"]:
-        if manques.get(nutrient, {}).get("manque", 0) > 0:
+        deficit = manques.get(nutrient, {}).get("deficit", 0)
+        if deficit > 0:
             for fert_key, fert_data in FERTILIZER_DATABASE.items():
                 if fert_data["composition"].get(nutrient, 0) > 0:
                     nutrient_percentage = fert_data["composition"][nutrient]
-                    required_fert_kg_ha = (manques[nutrient]["manque"] / nutrient_percentage) * 100
+                    required_fert_kg_ha = (deficit / nutrient_percentage) * 100 if nutrient_percentage > 0 else 0
                     if required_fert_kg_ha > 0.1:
                         found = False
                         for rec_fert in recommended_fertilizers:
@@ -967,101 +914,68 @@ def get_fertilizer_recommendations(manques, area):
                                 break
                         if not found:
                             recommended_fertilizers.append({
-                                "name": fert_data["name"],
-                                "icon": fert_data["icon"],
-                                "kgHa": round(required_fert_kg_ha, 1),
-                                "how": fert_data["how"],
-                                "when": fert_data["when"],
-                                "composition": fert_data["composition"],
+                                "name": fert_data["name"], "icon": fert_data["icon"],
+                                "kgHa": round(required_fert_kg_ha, 1), "how": fert_data["how"],
+                                "when": fert_data["when"], "composition": fert_data["composition"],
                             })
                         break
-
     return recommended_fertilizers
 
-
 def calculer_engrais_intelligent(wilaya_name, crop_name, planting_date_str, area, weather_data):
-    # الحصول على نوع التربة
     soil_type_fr = WILAYA_SOIL_MAPPING.get(wilaya_name, "Sols bruns calcaires")
     soil_data_complexe = SOL_NUTRIENTS_COMPLET.get(soil_type_fr, SOL_NUTRIENTS_COMPLET["Sols bruns calcaires"])
-
-    # ✅ التحقق من وجود المحصول - تصحيح
+    
     culture_data = CROPS_DATABASE.get(crop_name)
     if not culture_data:
-        return {
-            "success": False,
-            "error": f"Crop data not found for {crop_name}. Available crops: {', '.join(CROPS_DATABASE.keys())}"
-        }
-
-    # حساب المرحلة الحالية
+        return {"success": False, "error": f"Crop data not found for {crop_name}. Available: {', '.join(CROPS_DATABASE.keys())}"}
+    
     stage_info = calculer_stade(planting_date_str, culture_data)
     if not stage_info:
-        return {
-            "success": False,
-            "error": "Invalid planting date or future date. Please use a date in the past."
-        }
-
+        return {"success": False, "error": "Invalid planting date or future date."}
+    
     current_stade_name = stage_info["stade"]
     stade_data = culture_data["stades"].get(current_stade_name)
     if not stade_data:
-        return {
-            "success": False,
-            "error": f"Stage data not found for {current_stade_name}"
-        }
-
-    # حساب الاحتياجات
+        return {"success": False, "error": f"Stage data not found for {current_stade_name}"}
+    
     nutriments_list = ["N", "P", "K", "Ca", "Mg", "S"]
     resultats_nutriments = {}
     total_engrais_needed = 0
-
+    
     for nut in nutriments_list:
         besoin = stade_data.get(nut, 0)
         disponible = soil_data_complexe.get(nut, 0)
         manque = max(0, besoin - disponible)
         efficacite = soil_data_complexe["efficacite"]
         engrais_a_apporter = manque / efficacite if manque > 0 else 0
-
         resultats_nutriments[nut] = {
-            "need": besoin,
-            "available": disponible,
-            "deficit": round(manque, 1),
-            "required": round(engrais_a_apporter, 1),
+            "need": besoin, "available": disponible,
+            "deficit": round(manque, 1), "required": round(engrais_a_apporter, 1),
             "ok": disponible >= besoin
         }
         total_engrais_needed += engrais_a_apporter
-
-    # تعديل الطقس
+    
     if weather_data:
         temp = weather_data.get('avg_temp_7days', weather_data.get('temperature', 22))
         pluie = weather_data.get('precipitation', 0)
-        
-        if temp > 35:
-            total_engrais_needed *= 1.12
-        elif temp > 30:
-            total_engrais_needed *= 1.06
-
-        if pluie > 25:
-            total_engrais_needed *= 1.15
-        elif pluie > 10:
-            total_engrais_needed *= 1.08
-
-    # حساب الأسمدة الموصى بها
+        if temp > 35: total_engrais_needed *= 1.12
+        elif temp > 30: total_engrais_needed *= 1.06
+        if pluie > 25: total_engrais_needed *= 1.15
+        elif pluie > 10: total_engrais_needed *= 1.08
+    
     engrais_apportes_for_exces = {nut: resultats_nutriments[nut]["required"] for nut in nutriments_list}
     analyse_exces = detecter_exces_et_desequilibres(soil_data_complexe, stade_data, engrais_apportes_for_exces)
-    
     recommended_fertilizers = get_fertilizer_recommendations(resultats_nutriments, area)
-
-    # حساب الري
+    
     irrigation_base = culture_data.get("irrigation", {}).get(current_stade_name, 4)
     if weather_data and weather_data.get("avg_temp_7days", 20) > 30:
         irrigation_base *= 1.3
     irrigation_amount = round(irrigation_base, 1)
-
-    # إعداد التنبيهات
+    
     alerts = analyse_exces["alertes_critiques"]
     warnings = analyse_exces["avertissements"]
     tips = [{"title": "نصيحة تصحيحية", "description": c} for c in analyse_exces["conseils_correctifs"]]
-
-    # إضافة تنبيهات الطقس
+    
     if weather_data:
         if weather_data.get("temperature_max", 25) > 35:
             alerts.append(f"⚠️ تحذير: درجة حرارة عالية جداً ({weather_data['temperature_max']}°C)")
@@ -1069,132 +983,74 @@ def calculer_engrais_intelligent(wilaya_name, crop_name, planting_date_str, area
         if weather_data.get("precipitation", 0) > 30:
             warnings.append(f"⚠️ أمطار غزيرة متوقعة ({weather_data['precipitation']}mm)")
             tips.append({"title": "أمطار غزيرة", "description": "تجنب التسميد قبل هطول الأمطار"})
-
-    # إعداد المرحلة التالية
+    
     stades_list = list(culture_data["stades"].keys())
     next_stage_info = {}
     try:
         current_index = stades_list.index(current_stade_name)
         if current_index + 1 < len(stades_list):
             next_name = stades_list[current_index + 1]
-            next_stage_info = {
-                "name": next_name,
-                "days_estimes": culture_data["stades"][next_name]["duree"]
-            }
+            next_stage_info = {"name": next_name, "days_estimes": culture_data["stades"][next_name]["duree"]}
     except ValueError:
         pass
-
-    # المخرجات النهائية
+    
     return {
-        "success": True,
-        "wilaya": wilaya_name,
-        "area": area,
-        "crop": crop_name,
-        "plantDate": planting_date_str,
-        "date": datetime.now().strftime('%Y-%m-%d'),
-        "totalKgHa": round(total_engrais_needed, 1),
-        "totalKg": round(total_engrais_needed * area, 1),  # الكمية الإجمالية للمساحة
-        "stageProgress": stage_info["progression"],
-        "stageName": current_stade_name,
-        "daysElapsed": stage_info["jours_ecoules"],
-        "totalDays": culture_data["cycle_jours"],
-        "daysRemaining": stage_info["days_remaining"],
-        "nextStage": next_stage_info,
+        "success": True, "wilaya": wilaya_name, "area": area, "crop": crop_name,
+        "plantDate": planting_date_str, "date": datetime.now().strftime('%Y-%m-%d'),
+        "totalKgHa": round(total_engrais_needed, 1), "totalKg": round(total_engrais_needed * area, 1),
+        "stageProgress": stage_info["progression"], "stageName": current_stade_name,
+        "daysElapsed": stage_info["jours_ecoules"], "totalDays": culture_data["cycle_jours"],
+        "daysRemaining": stage_info["days_remaining"], "nextStage": next_stage_info,
         "soilType": soil_type_fr,
-        "soilData": {
-            "texture": soil_type_fr,
-            "phMin": soil_data_complexe["ph"],
-            "phMax": soil_data_complexe["ph"],
-            "fertilisation": soil_data_complexe["description"],
-        },
-        "soilNutrients": {
-            "efficacite": soil_data_complexe["efficacite"],
-            "moPct": soil_data_complexe["mo_pct"],
-            "cec": f"{soil_data_complexe['cec']} meq/100g",
-            "available": {nut: soil_data_complexe.get(nut, 0) for nut in nutriments_list},
-        },
-        "nutrients": resultats_nutriments,
-        "fertilizers": recommended_fertilizers,
-        "alerts": alerts,
-        "warnings": warnings,
-        "tips": tips,
+        "soilData": {"texture": soil_type_fr, "phMin": soil_data_complexe["ph"], "phMax": soil_data_complexe["ph"], "fertilisation": soil_data_complexe["description"]},
+        "soilNutrients": {"efficacite": soil_data_complexe["efficacite"], "moPct": soil_data_complexe["mo_pct"], "cec": f"{soil_data_complexe['cec']} meq/100g", "available": {nut: soil_data_complexe.get(nut, 0) for nut in nutriments_list}},
+        "nutrients": resultats_nutriments, "fertilizers": recommended_fertilizers,
+        "alerts": alerts, "warnings": warnings, "tips": tips,
         "irrigation": {"amount": irrigation_amount, "unit": "mm/jour"},
         "weatherData": weather_data
     }
 
-
 # ============================================================
-# نقاط نهاية API
+# 🌐 نقاط نهاية API
 # ============================================================
-
 @app.route('/health', methods=['GET'])
 def health_check():
-    """نقطة نهاية للتحقق من صحة الخادم"""
     return jsonify({"status": "ok", "timestamp": datetime.now().isoformat()})
 
 @app.route('/api/wilayas', methods=['GET'])
 def get_wilayas():
-    """إرجاع قائمة الولايات مع إحداثياتها"""
-    wilayas_list = []
-    for name, data in WILAYA_COORDINATES.items():
-        wilayas_list.append({
-            "name": name,
-            "code": data["code"],
-            "region": data["region"],
-            "lat": data["lat"],
-            "lon": data["lon"]
-        })
-    return jsonify(wilayas_list)
+    return jsonify([{"name": n, "code": d["code"], "region": d["region"], "lat": d["lat"], "lon": d["lon"]} for n, d in WILAYA_COORDINATES.items()])
 
 @app.route('/api/crops', methods=['GET'])
 def get_crops():
-    """إرجاع قائمة المحاصيل المتاحة"""
-    crops_list = []
-    for name, data in CROPS_DATABASE.items():
-        crops_list.append({
-            "name": name,
-            "categorie": data["categorie"],
-            "cycle_jours": data["cycle_jours"]
-        })
-    return jsonify(crops_list)
+    return jsonify([{"name": n, "categorie": d["categorie"], "cycle_jours": d["cycle_jours"]} for n, d in CROPS_DATABASE.items()])
 
 @app.route('/api/fertilizer/calculate', methods=['POST'])
 def calculate_fertilizer():
-    """نقطة النهاية الرئيسية لحساب التسميد"""
     try:
         data = request.get_json()
-        
         wilaya = data.get('wilaya')
         area = float(data.get('area', 1.0))
         crop = data.get('crop')
         plant_date = data.get('plantDate')
         
-        # التحقق من صحة المدخلات
         if not wilaya or not crop or not plant_date:
             return jsonify({"success": False, "error": "Missing required fields: wilaya, crop, plantDate"}), 400
         
-        # الحصول على إحداثيات الولاية
         wilaya_coords = WILAYA_COORDINATES.get(wilaya)
         if not wilaya_coords:
             return jsonify({"success": False, "error": f"Wilaya '{wilaya}' not found"}), 400
         
-        # جلب بيانات الطقس
         weather_data = get_weather_data(wilaya_coords["lat"], wilaya_coords["lon"])
-        
-        # حساب التوصية
         result = calculer_engrais_intelligent(wilaya, crop, plant_date, area, weather_data)
         
-        # ✅ إذا كانت النتيجة تحتوي على success: False، نرجعها مع status code مناسب
         if not result.get('success', True):
             return jsonify(result), 400
-        
         return jsonify(result)
-    
+        
     except ValueError as e:
-        # خطأ في تحويل البيانات (مثلاً area مش رقم)
         return jsonify({"success": False, "error": f"Invalid data format: {str(e)}"}), 400
     except Exception as e:
-        # أي خطأ آخر
         print(f"❌ Unexpected error: {e}")
         import traceback
         traceback.print_exc()
@@ -1202,15 +1058,12 @@ def calculate_fertilizer():
 
 @app.route('/api/weather', methods=['GET'])
 def get_weather():
-    """نقطة نهاية لجلب بيانات الطقس لولاية محددة"""
     wilaya = request.args.get('wilaya')
     if not wilaya:
         return jsonify({"success": False, "error": "Wilaya parameter required"}), 400
-    
     wilaya_coords = WILAYA_COORDINATES.get(wilaya)
     if not wilaya_coords:
         return jsonify({"success": False, "error": f"Wilaya '{wilaya}' not found"}), 400
-    
     weather = get_weather_data(wilaya_coords["lat"], wilaya_coords["lon"])
     return jsonify({"success": True, "weather": weather, "wilaya": wilaya})
 
